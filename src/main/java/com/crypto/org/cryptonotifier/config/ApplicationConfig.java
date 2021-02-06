@@ -13,6 +13,7 @@ import reactor.netty.http.client.HttpClient;
 public class ApplicationConfig {
 
     public static final String API_KEY_HEADER = "X-CMC_PRO_API_KEY";
+    public static final String BASE_URL = "pro-api.coinmarketcap.com";
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -27,7 +28,7 @@ public class ApplicationConfig {
                         .maxInMemorySize(16 * 1024 * 1024))
                 .build())
                 .defaultHeader(API_KEY_HEADER, apiKey)
-                .baseUrl("pro-api.coinmarketcap.com")
+                .baseUrl(BASE_URL)
                 .clientConnector(new ReactorClientHttpConnector(HttpClient.create().followRedirect(true)))
                 .build();
     }
