@@ -15,11 +15,12 @@ public class CryptoInfoClient {
 
     private final WebClient webClient;
 
-    public Flux<CryptoCurrencyInfo> getCryptos(String apiKey) {
-        log.debug(webClient);
+    public Flux<CryptoCurrencyInfo> getCryptos() {
         return webClient.get().uri("/v1/cryptocurrency/map")
-                .header("X-CMC_PRO_API_KEY", apiKey)
                 .accept(MediaType.APPLICATION_JSON)
-                .retrieve().bodyToFlux(CryptoCurrencyInfo.class);
+                .retrieve()
+                .bodyToFlux(CryptoCurrencyInfo.class)
+                .doOnError(log::error)
+                .onErrorReturn(CryptoCurrencyInfo.EMPTY_CURRENCY_INFO);
     }
 }

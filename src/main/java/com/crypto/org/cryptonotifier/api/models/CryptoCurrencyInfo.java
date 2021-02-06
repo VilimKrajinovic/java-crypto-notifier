@@ -9,6 +9,8 @@ import java.util.List;
 @Data
 public class CryptoCurrencyInfo {
 
+    public static final CryptoCurrencyInfo EMPTY_CURRENCY_INFO = new CryptoCurrencyInfo();
+
     @JsonProperty("data")
     private List<CryptoData> data;
 
