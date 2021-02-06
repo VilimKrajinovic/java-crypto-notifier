@@ -32,4 +32,10 @@ public class CachedCryptoService implements CryptoService {
         return CacheMono.lookup(cache, CRYPTO_CACHE_KEY)
                 .onCacheMissResume(delegate::getCryptos);
     }
+
+    @Override
+    public Mono<CryptoCurrencyInfo> getCryptoForSymbol(String symbol) {
+        return CacheMono.lookup(cache, symbol)
+                .onCacheMissResume(() -> delegate.getCryptoForSymbol(symbol));
+    }
 }

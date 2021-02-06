@@ -14,6 +14,7 @@ import reactor.test.StepVerifier;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -55,6 +56,24 @@ public class CachedCryptoServiceTest {
 
         Mono<CryptoCurrencyInfo> first = cachedCryptoService.getCryptos();
         Mono<CryptoCurrencyInfo> second = cachedCryptoService.getCryptos();
+
+        StepVerifier.create(first)
+                .expectNext(CRYPTO_INFO)
+                .verifyComplete();
+        StepVerifier.create(second)
+                .expectNext(CRYPTO_INFO)
+                .verifyComplete();
+    }
+
+    @Test
+    public void shouldCacheIndividualSymbolValueFromDelegateAndReuseItLater() {
+        given(delegateService.getCryptoForSymbol(any()))
+                .willReturn(Mono.just(CRYPTO_INFO))
+                .willReturn(Mono.error(new RuntimeException("Should have been cached")));
+        String givenSymbol = "symbol";
+
+        Mono<CryptoCurrencyInfo> first = cachedCryptoService.getCryptoForSymbol(givenSymbol);
+        Mono<CryptoCurrencyInfo> second = cachedCryptoService.getCryptoForSymbol(givenSymbol);
 
         StepVerifier.create(first)
                 .expectNext(CRYPTO_INFO)

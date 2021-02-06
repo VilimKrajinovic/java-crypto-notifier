@@ -15,7 +15,7 @@ public class CryptoCurrencyInfo {
     private List<CryptoData> data;
 
     @Data
-    static class CryptoData{
+    public static class CryptoData{
         @JsonProperty("id")
         private int id;
         @JsonProperty("name")
@@ -35,7 +35,7 @@ public class CryptoCurrencyInfo {
     }
 
     @Data
-    static class Platform {
+    public static class Platform {
         @JsonProperty("id")
         private int id;
         @JsonProperty("name")
