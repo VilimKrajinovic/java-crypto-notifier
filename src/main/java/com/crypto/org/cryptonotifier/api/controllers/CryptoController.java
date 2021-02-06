@@ -1,20 +1,20 @@
 package com.crypto.org.cryptonotifier.api.controllers;
 
-import com.crypto.org.cryptonotifier.api.clients.CryptoInfoClient;
 import com.crypto.org.cryptonotifier.api.models.CryptoCurrencyInfo;
+import com.crypto.org.cryptonotifier.api.service.CryptoInfoService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @AllArgsConstructor
 @RestController
 public class CryptoController {
 
-    private final CryptoInfoClient cryptoInfoClient;
+    private final CryptoInfoService cryptoInfoService;
 
     @GetMapping("/")
-    public Flux<CryptoCurrencyInfo> getAllCryptos(){
-        return cryptoInfoClient.getCryptos();
+    public Mono<CryptoCurrencyInfo> getAllCryptos(){
+        return cryptoInfoService.getCryptos();
     }
 }
