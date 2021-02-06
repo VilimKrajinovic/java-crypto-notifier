@@ -1,7 +1,6 @@
-package com.crypto.org.cryptonotifier.api.clients;
+package com.crypto.org.cryptonotifier.api.service;
 
 import com.crypto.org.cryptonotifier.api.models.CryptoCurrencyInfo;
-import com.crypto.org.cryptonotifier.api.service.CryptoInfoService;
 import com.crypto.org.cryptonotifier.config.CacheConfig;
 import com.google.common.cache.Cache;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,14 +14,14 @@ import java.util.Map;
 
 @Service
 @Primary
-public class CryptoInfoCacheClient implements CryptoInfoService {
+public class CachedCryptoService implements CryptoService {
 
     private static final String CRYPTO_CACHE_KEY = "cryptos";
-    private final CryptoInfoService delegate;
+    private final CryptoService delegate;
     private final Map<Object, ? super Signal<? extends CryptoCurrencyInfo>> cache;
 
-    public CryptoInfoCacheClient(
-            CryptoInfoService delegate,
+    public CachedCryptoService(
+            CryptoService delegate,
             @Qualifier(CacheConfig.CRYPTOS_CACHE_IDENTIFIER) Cache<Object, ? super Signal<? extends CryptoCurrencyInfo>> cache) {
         this.delegate = delegate;
         this.cache = cache.asMap();

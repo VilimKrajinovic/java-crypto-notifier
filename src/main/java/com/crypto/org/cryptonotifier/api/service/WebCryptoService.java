@@ -1,7 +1,6 @@
-package com.crypto.org.cryptonotifier.api.clients;
+package com.crypto.org.cryptonotifier.api.service;
 
 import com.crypto.org.cryptonotifier.api.models.CryptoCurrencyInfo;
-import com.crypto.org.cryptonotifier.api.service.CryptoInfoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
@@ -12,7 +11,7 @@ import reactor.core.publisher.Mono;
 @Service
 @Log4j2
 @AllArgsConstructor
-public class CryptoInfoWebClient implements CryptoInfoService {
+public class WebCryptoService implements CryptoService {
 
     private final WebClient webClient;
 

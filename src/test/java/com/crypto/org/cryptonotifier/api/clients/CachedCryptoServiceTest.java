@@ -1,12 +1,12 @@
 package com.crypto.org.cryptonotifier.api.clients;
 
 import com.crypto.org.cryptonotifier.api.models.CryptoCurrencyInfo;
-import com.crypto.org.cryptonotifier.api.service.CryptoInfoService;
+import com.crypto.org.cryptonotifier.api.service.CachedCryptoService;
+import com.crypto.org.cryptonotifier.api.service.CryptoService;
 import com.google.common.cache.Cache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import reactor.core.publisher.Mono;
@@ -17,22 +17,22 @@ import java.util.concurrent.ConcurrentHashMap;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CryptoInfoCacheClientTest {
+public class CachedCryptoServiceTest {
 
     private static final CryptoCurrencyInfo CRYPTO_INFO = new CryptoCurrencyInfo();
 
     @Mock
-    CryptoInfoService delegateService;
+    CryptoService delegateService;
 
     @Mock
     Cache cryptosCache;
 
-    CryptoInfoCacheClient cachedClient;
+    CachedCryptoService cachedCryptoService;
 
     @Before
     public void setup(){
         given(cryptosCache.asMap()).willReturn(new ConcurrentHashMap<>());
-        cachedClient = new CryptoInfoCacheClient(delegateService, cryptosCache);
+        cachedCryptoService = new CachedCryptoService(delegateService, cryptosCache);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class CryptoInfoCacheClientTest {
         given(delegateService.getCryptos())
                 .willReturn(Mono.just(CRYPTO_INFO));
 
-        Mono<CryptoCurrencyInfo> actual = cachedClient.getCryptos();
+        Mono<CryptoCurrencyInfo> actual = cachedCryptoService.getCryptos();
 
         StepVerifier.create(actual)
                 .expectNext(CRYPTO_INFO)
@@ -53,8 +53,8 @@ public class CryptoInfoCacheClientTest {
                 .willReturn(Mono.just(CRYPTO_INFO))
                 .willReturn(Mono.error(new RuntimeException("Should have been cached")));
 
-        Mono<CryptoCurrencyInfo> first = cachedClient.getCryptos();
-        Mono<CryptoCurrencyInfo> second = cachedClient.getCryptos();
+        Mono<CryptoCurrencyInfo> first = cachedCryptoService.getCryptos();
+        Mono<CryptoCurrencyInfo> second = cachedCryptoService.getCryptos();
 
         StepVerifier.create(first)
                 .expectNext(CRYPTO_INFO)
