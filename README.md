@@ -1,5 +1,5 @@
-#Crypto notifier
-##Project written in Java using Project Reactor
+# Crypto notifier
+## Project written in Java using Project Reactor
 
 ## Running the application
 
