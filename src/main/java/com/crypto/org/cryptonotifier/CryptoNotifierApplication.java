@@ -2,9 +2,11 @@ package com.crypto.org.cryptonotifier;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import reactor.tools.agent.ReactorDebugAgent;
 
 @SpringBootApplication
+@EnableConfigurationProperties
 public class CryptoNotifierApplication {
 
 	public static final String REACTOR_DEBUG_AGENT_ENABLED_PROPERTY = "reactor.debug.agent.enabled";
