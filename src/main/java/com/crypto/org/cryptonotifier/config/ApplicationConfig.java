@@ -21,7 +21,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public WebClient getWebClientBuilder(@Value("${crypto.api-key:default}") String apiKey) {
+    public WebClient getWebClient(@Value("${crypto.api-key:default}") String apiKey) {
         return WebClient.builder().exchangeStrategies(ExchangeStrategies.builder()
                 .codecs(configurer -> configurer
                         .defaultCodecs()
