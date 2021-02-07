@@ -6,7 +6,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriBuilder;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -23,8 +22,7 @@ public class WebCryptoService implements CryptoService {
                 .attribute("sort", "id")
                 .retrieve()
                 .bodyToMono(CryptoCurrencyInfo.class)
-                .doOnError(log::error)
-                .onErrorReturn(CryptoCurrencyInfo.EMPTY_CURRENCY_INFO);
+                .doOnError(log::error);
     }
 
     @Override
@@ -36,7 +34,6 @@ public class WebCryptoService implements CryptoService {
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(CryptoCurrencyInfo.class)
-                .doOnError(log::error)
-                .onErrorReturn(CryptoCurrencyInfo.EMPTY_CURRENCY_INFO);
+                .doOnError(log::error);
     }
 }
