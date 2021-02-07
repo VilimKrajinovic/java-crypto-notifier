@@ -9,33 +9,41 @@ public class ApiException {
     @NonNull
     ApiRequestError requestError;
 
-    public static ApiException unauthorized(String text) {
-        return create(MessageId.UNAUTHORIZED, text);
+    public static ApiException unauthorized(String exception) {
+        return create(MessageId.UNAUTHORIZED, exception);
     }
 
-    public static ApiException notFound(String text) {
-        return create(MessageId.NOT_FOUND, text);
+    public static ApiException notFound(String exception) {
+        return create(MessageId.NOT_FOUND, exception);
     }
 
-    public static ApiException badRequest(String text) {
-        return create(MessageId.BAD_REQUEST, text);
+    public static ApiException badRequest(String exception) {
+        return create(MessageId.BAD_REQUEST, exception);
     }
 
-    private static ApiException create(MessageId messageId, String text) {
+    private static ApiException create(MessageId messageId, String exception) {
         return new ApiException(
                 new ApiRequestError(
                         new ApiRequestError.ApiRequestErrorDetails(
                                 messageId.name(),
-                                (text != null) ? text : ""
+                                messageId.message,
+                                exception != null ? exception : ""
                         )
                 )
         );
     }
 
     private enum MessageId {
-        UNAUTHORIZED,
-        BAD_REQUEST,
-        NOT_FOUND,
+        UNAUTHORIZED("Unauthorized access"),
+        BAD_REQUEST("Bad request, please double check your request"),
+        NOT_FOUND("Resource is not found"),
+        ;
+
+        private final String message;
+
+        MessageId(String message) {
+            this.message = message;
+        }
     }
 
     @Value
@@ -48,7 +56,9 @@ public class ApiException {
             @NonNull
             String messageId;
             @NonNull
-            String text;
+            String message;
+            @NonNull
+            String exceptionMessage;
         }
     }
 }
