@@ -14,7 +14,7 @@ public class CacheConfig {
     public static final String CRYPTOS_CACHE_IDENTIFIER ="getCryptosCache";
 
     @Bean(name = CRYPTOS_CACHE_IDENTIFIER)
-    public Cache<Object, ? super Signal<? extends CryptoCurrencyInfo>> getCryptosCache(){
+    public Cache<String, ? super Signal<? extends CryptoCurrencyInfo>> getCryptosCache(){
         return CacheBuilder.newBuilder()
                 .expireAfterAccess(60, TimeUnit.SECONDS)
                 .build();

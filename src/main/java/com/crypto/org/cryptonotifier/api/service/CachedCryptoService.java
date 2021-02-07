@@ -16,13 +16,13 @@ import java.util.Map;
 @Primary
 public class CachedCryptoService implements CryptoService {
 
-    private static final String CRYPTO_CACHE_KEY = "cryptos";
+    private static final String CRYPTO_CACHE_KEY = "allCryptos";
     private final CryptoService delegate;
-    private final Map<Object, ? super Signal<? extends CryptoCurrencyInfo>> cache;
+    private final Map<String, ? super Signal<? extends CryptoCurrencyInfo>> cache;
 
     public CachedCryptoService(
             CryptoService delegate,
-            @Qualifier(CacheConfig.CRYPTOS_CACHE_IDENTIFIER) Cache<Object, ? super Signal<? extends CryptoCurrencyInfo>> cache) {
+            @Qualifier(CacheConfig.CRYPTOS_CACHE_IDENTIFIER) Cache<String, ? super Signal<? extends CryptoCurrencyInfo>> cache) {
         this.delegate = delegate;
         this.cache = cache.asMap();
     }
