@@ -17,9 +17,10 @@ public class WebCryptoService implements CryptoService {
 
     @Override
     public Mono<CryptoCurrencyInfo> getCryptos() {
-        return webClient.get().uri("/v1/cryptocurrency/map")
+        return webClient.get().uri(uriBuilder -> uriBuilder.path("/v1/cryptocurrency/map")
+                .queryParam("sort", "id")
+                .build())
                 .accept(MediaType.APPLICATION_JSON)
-                .attribute("sort", "id")
                 .retrieve()
                 .bodyToMono(CryptoCurrencyInfo.class)
                 .doOnError(log::error);
