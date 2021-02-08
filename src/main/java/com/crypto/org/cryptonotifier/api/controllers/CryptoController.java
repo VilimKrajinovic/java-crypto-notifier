@@ -1,6 +1,7 @@
 package com.crypto.org.cryptonotifier.api.controllers;
 
-import com.crypto.org.cryptonotifier.api.models.CryptoCurrencyInfo;
+import com.crypto.org.cryptonotifier.api.models.map.CryptoCurrencyInfo;
+import com.crypto.org.cryptonotifier.api.models.quotes.QuoteCryptoInfo;
 import com.crypto.org.cryptonotifier.api.service.CryptoService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +20,13 @@ public class CryptoController {
         return cryptoService.getCryptos();
     }
 
-    @GetMapping("/{symbol}")
+    @GetMapping("/map/{symbol}")
     public Mono<CryptoCurrencyInfo> getDataForSymbol(@PathVariable String symbol){
         return cryptoService.getCryptoForSymbol(symbol);
+    }
+
+    @GetMapping("/quote/{symbol}")
+    public Mono<QuoteCryptoInfo> getQuoteForSymbol(@PathVariable String symbol){
+        return cryptoService.getQuotesForSymbol(symbol);
     }
 }

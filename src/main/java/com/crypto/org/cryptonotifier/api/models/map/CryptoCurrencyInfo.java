@@ -1,4 +1,4 @@
-package com.crypto.org.cryptonotifier.api.models;
+package com.crypto.org.cryptonotifier.api.models.map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
